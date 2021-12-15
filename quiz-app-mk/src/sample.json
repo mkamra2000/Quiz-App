@@ -1,0 +1,41 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Science%3A%20Computers",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Whistler%20was%20the%20codename%20of%20this%20Microsoft%20Operating%20System.",
+      "correct_answer": "Windows%20XP",
+      "incorrect_answers": ["Windows%202000", "Windows%207", "Windows%2095"]
+    },
+    {
+      "category": "Science%3A%20Computers",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Moore%27s%20law%20originally%20stated%20that%20the%20number%20of%20transistors%20on%20a%20microprocessor%20chip%20would%20double%20every...",
+      "correct_answer": "Year",
+      "incorrect_answers": ["Four%20Years", "Two%20Years", "Eight%20Years"]
+    },
+    {
+      "category": "Science%3A%20Computers",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "What%20does%20%22LCD%22%20stand%20for%3F",
+      "correct_answer": "Liquid%20Crystal%20Display",
+      "incorrect_answers": [
+        "Language%20Control%20Design",
+        "Last%20Common%20Difference",
+        "Long%20Continuous%20Design"
+      ]
+    },
+    {
+      "category": "Science%3A%20Computers",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "What%20was%20the%20first%20Android%20version%20specifically%20optimized%20for%20tablets%3F",
+      "correct_answer": "Honeycomb",
+      "incorrect_answers": ["Eclair", "Froyo", "Marshmellow"]
+    }
+  ]
+}
