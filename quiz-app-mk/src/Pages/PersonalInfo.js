@@ -24,7 +24,7 @@ function PersonalInfo(props) {
     props.setType(document.forms[0]["trivia_type"].value);
     console.log("Clicked");
   }
-  
+
   return (
     <>
       <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">

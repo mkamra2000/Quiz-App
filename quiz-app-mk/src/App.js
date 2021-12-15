@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import PersonalInfo from "./Pages/PersonalInfo";
-import NotificationBox from "./Pages/NotificationBox"
+import NotificationBox from "./Pages/NotificationBox";
 import Quiz from "./Pages/Quiz";
 
 function App() {
@@ -17,15 +17,14 @@ function App() {
         exact
         path="/"
         element={
-          <NotificationBox/>
-          // <PersonalInfo
-          //   setName={setName}
-          //   setCategory={setCategory}
-          //   setDifficulty={setDifficulty}
-          //   setType={setType}
-          //   setData={setData}
-          //   data={data}
-          // />
+          <PersonalInfo
+            setName={setName}
+            setCategory={setCategory}
+            setDifficulty={setDifficulty}
+            setType={setType}
+            setData={setData}
+            data={data}
+          />
         }
       />
       <Route
@@ -41,6 +40,7 @@ function App() {
           />
         }
       />
+      <Route path="/box" element={<NotificationBox />} />
     </Routes>
   );
 }
