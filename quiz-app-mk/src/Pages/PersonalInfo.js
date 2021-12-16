@@ -13,15 +13,12 @@ function PersonalInfo(props) {
       alert("Please choose suitable category for Quiz");
     else if (document.forms[0]["trivia_difficulty"].value === "any")
       alert("Please choose difficulty level of Quiz");
-    else if (document.forms[0]["trivia_type"].value === "any")
-      alert("Please choose type of quiz questions");
     else {
       navigate("/quiz");
     }
     props.setName(document.forms[0]["personName"].value);
     props.setCategory(document.forms[0]["trivia_category"].value);
     props.setDifficulty(document.forms[0]["trivia_difficulty"].value);
-    props.setType(document.forms[0]["trivia_type"].value);
     console.log("Clicked");
   }
 
@@ -85,18 +82,6 @@ function PersonalInfo(props) {
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
-        </select>
-        <select
-          name="trivia_type"
-          id="trivia_type"
-          className="scrollbar scrollbar-thumb-blue-darker scrollbar-track-blue-light scrollbar-thumb-rounded-full scrollbar-track-rounded-full hover:scrollbar-thumb-blue-lighter w-80 border-blue-darker text-blue-dark border-2 rounded-md m-2 p-2"
-        >
-          &gt;
-          <option defaultValue value="any">
-            Select Type
-          </option>
-          <option value="multiple">Multiple Choice</option>
-          <option value="boolean">True / False</option>
         </select>
         <input
           className="w-40 bg-blue-light text-blue-darker p-2 rounded-md hover:bg-blue-darker hover:text-white cursor-pointer"

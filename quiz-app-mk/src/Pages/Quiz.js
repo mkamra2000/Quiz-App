@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import NotificationBox from "./NotificationBox";
 
 function Quiz(props) {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Quiz(props) {
   async function getData() {
     const axios = require("axios");
     const response = await axios.get(
-      `https://opentdb.com/api.php?amount=10&category=${18}&difficulty=${"medium"}&type=${"multiple"}&encode=url3986`
+      `https://opentdb.com/api.php?amount=10&category=${props.category}&difficulty=${props.difficulty}&type=multiple&encode=url3986`
     );
     return response;
   }
@@ -24,38 +25,37 @@ function Quiz(props) {
   useEffect(() => {
     if (
       name === "" ||
-      props.category === "any" ||
-      props.difficulty === "any" ||
-      props.type === "any"
+      props.category === 0 ||
+      props.difficulty === "any"
     ) {
       navigate("/");
     } else {
-      getData().then(function (response) {
-        let myData = response.data.results;
-        let ic = myData[count].incorrect_answers;
-        let options = [];
-        let question = "";
-        ic.forEach((op) => {
-          op = decodeURIComponent(op);
-          options.push(op);
+      if (count < 9) {
+        getData().then(function (response) {
+          let myData = response.data.results;
+          let ic = myData[count].incorrect_answers;
+          let options = [];
+          let question = "";
+          ic.forEach((op) => {
+            op = decodeURIComponent(op);
+            options.push(op);
+          });
+          setCorrectAns(decodeURIComponent(myData[count].correct_answer));
+          options.push(decodeURIComponent(myData[count].correct_answer));
+          shuffleArray(options);
+          setOpts(options);
+          question = decodeURIComponent(myData[count].question);
+          setQues(question);
         });
-        setCorrectAns(decodeURIComponent(myData[count].correct_answer));
-        options.push(decodeURIComponent(myData[count].correct_answer));
-        shuffleArray(options);
-        setOpts(options);
-        question = decodeURIComponent(myData[count].question);
-        setQues(question);
-      });
+      }
     }
   }, [click, count]);
 
   function nextClick() {
-    if (count < 9) {
+    if (count <= 9) {
       click ? setClick(false) : setClick(true);
       setCount(count + 1);
       setCheckId("");
-    } else {
-      console.log("Thanks");
     }
   }
 
@@ -96,6 +96,8 @@ function Quiz(props) {
         <div className="flex justify-center items-center h-screen">
           <div className="w-16 h-16 border-4 border-blue-dark border-dotted rounded-full animate-spin"></div>
         </div>
+      ) : count > 9 ? (
+        <NotificationBox name={name} header={"Are you Sure?"} desc={"Do you want to solve more questions?"} setCount={setCount}/>
       ) : (
         <>
           <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
