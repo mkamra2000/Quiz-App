@@ -13,6 +13,8 @@ function Quiz(props) {
   const [score, setScore] = useState(0);
   const [correctAns, setCorrectAns] = useState("");
   const [checkId, setCheckId] = useState("");
+  const [showNext, setShowNext] = useState(false);
+  const [attempt, setAttempt] = useState(1);
 
   async function getData() {
     const axios = require("axios");
@@ -23,11 +25,7 @@ function Quiz(props) {
   }
   // Handling Api Request
   useEffect(() => {
-    if (
-      name === "" ||
-      props.category === 0 ||
-      props.difficulty === "any"
-    ) {
+    if (name === "" || props.category === 0 || props.difficulty === "any") {
       navigate("/");
     } else {
       if (count < 9) {
@@ -46,7 +44,12 @@ function Quiz(props) {
           setOpts(options);
           question = decodeURIComponent(myData[count].question);
           setQues(question);
-        });
+        }).catch(
+          function(error){
+            console.error(error);
+            navigate("/");
+          }
+        );
       }
     }
   }, [click, count]);
@@ -56,14 +59,23 @@ function Quiz(props) {
       click ? setClick(false) : setClick(true);
       setCount(count + 1);
       setCheckId("");
+      setShowNext(false);
+      setAttempt(1);
     }
   }
 
-  function checkForCorrect(opVal, correctId) {
+  function checkForCorrect(opVal, correctId, wrongId) {
     if (opVal === correctAns) {
       console.log("Correct Answer");
-      setScore(score + 10);
+      if (attempt === 1) setScore(score + 10);
+      else if (attempt === 2) setScore(score + 8);
+      else if (attempt === 3) setScore(score + 5);
+      else if (attempt === 4) setScore(score + 2);
       setCheckId(correctId);
+      setShowNext(true);
+    } else {
+      setCheckId(wrongId);
+      setAttempt(attempt+1);
     }
   }
 
@@ -73,31 +85,37 @@ function Quiz(props) {
     switch (opId) {
       case "op-1":
         opVal = document.getElementById("op1-text").innerText;
-        checkForCorrect(opVal, "op1-correct");
+        checkForCorrect(opVal, "op1-correct", "op1-wrong");
         break;
       case "op-2":
         opVal = document.getElementById("op2-text").innerText;
-        checkForCorrect(opVal, "op2-correct");
+        checkForCorrect(opVal, "op2-correct", "op2-wrong");
         break;
       case "op-3":
         opVal = document.getElementById("op3-text").innerText;
-        checkForCorrect(opVal, "op3-correct");
+        checkForCorrect(opVal, "op3-correct", "op3-wrong");
         break;
       case "op-4":
         opVal = document.getElementById("op4-text").innerText;
-        checkForCorrect(opVal, "op4-correct");
+        checkForCorrect(opVal, "op4-correct", "op4-wrong");
         break;
     }
   }
 
   return (
-    <>
+    <div className="overflow-hidden">
       {opts.length === 0 ? (
         <div className="flex justify-center items-center h-screen">
           <div className="w-16 h-16 border-4 border-blue-dark border-dotted rounded-full animate-spin"></div>
         </div>
       ) : count > 9 ? (
-        <NotificationBox name={name} header={"Are you Sure?"} desc={"Do you want to solve more questions?"} setCount={setCount}/>
+        <NotificationBox
+          name={name}
+          header={"Are you Sure?"}
+          desc={"Do you want to solve more questions?"}
+          setCount={setCount}
+          setScore={setScore}
+        />
       ) : (
         <>
           <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
@@ -124,7 +142,13 @@ function Quiz(props) {
                 >
                   <span>(A)&nbsp;&nbsp;</span>
                   <span id="op1-text">{opts[0]} </span>
-                  {checkId === "op1-correct" ? <Tick /> : <></>}
+                  {checkId === "op1-correct" ? (
+                    <Tick />
+                  ) : checkId === "op1-wrong" ? (
+                    <WrongTick />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div
                   id="op-2"
@@ -133,7 +157,13 @@ function Quiz(props) {
                 >
                   <span>(B)&nbsp;&nbsp;</span>
                   <span id="op2-text">{opts[1]} </span>
-                  {checkId === "op2-correct" ? <Tick /> : <></>}
+                  {checkId === "op2-correct" ? (
+                    <Tick />
+                  ) : checkId === "op2-wrong" ? (
+                    <WrongTick />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div
                   id="op-3"
@@ -142,7 +172,13 @@ function Quiz(props) {
                 >
                   <span>(C)&nbsp;&nbsp;</span>
                   <span id="op3-text">{opts[2]} </span>
-                  {checkId === "op3-correct" ? <Tick /> : <></>}
+                  {checkId === "op3-correct" ? (
+                    <Tick />
+                  ) : checkId === "op3-wrong" ? (
+                    <WrongTick />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div
                   id="op-4"
@@ -151,22 +187,32 @@ function Quiz(props) {
                 >
                   <span>(D)&nbsp;&nbsp;</span>
                   <span id="op4-text">{opts[3]} </span>
-                  {checkId === "op4-correct" ? <Tick /> : <></>}
+                  {checkId === "op4-correct" ? (
+                    <Tick />
+                  ) : checkId === "op4-wrong" ? (
+                    <WrongTick />
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="flex justify-end m-4">
-              <button
-                onClick={nextClick}
-                className="w-40 bg-blue-light text-blue-darker p-2 rounded-md hover:bg-blue-darker hover:text-white cursor-pointer flex justify-center items-center text-lg"
-              >
-                Next
-              </button>
-            </div>
+            {showNext ? (
+              <div className="flex justify-end m-4">
+                <button
+                  onClick={nextClick}
+                  className="w-40 bg-blue-light text-blue-darker p-2 rounded-md hover:bg-blue-darker hover:text-white cursor-pointer flex justify-center items-center text-lg"
+                >
+                  Next
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 
@@ -184,6 +230,19 @@ function Tick() {
       }}
     >
       &#10003;
+    </span>
+  );
+}
+function WrongTick() {
+  return (
+    <span
+      style={{
+        color: "#ee0000",
+        fontSize: "25px",
+        fontWeight: "bolder",
+      }}
+    >
+      &#10060;
     </span>
   );
 }
