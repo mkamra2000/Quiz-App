@@ -37,7 +37,7 @@ function App() {
           />
         }
       />
-      <Route path="/inst" element={<InstructionPage name={name}/>} />
+      <Route path="/inst" element={<InstructionPage name={name} />} />
     </Routes>
   );
 }

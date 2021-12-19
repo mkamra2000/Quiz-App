@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import AlertBox from "./AlertBox";
 
 function PersonalInfo(props) {
   const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+  const [text, setText] = useState("initialState");
   // Ex:- Form Validation Trick
   // const personName = document.forms[0]["personName"];
   function handleSubmit(e) {
     e.preventDefault();
-    if (document.forms[0]["personName"].value === "")
-      alert("Please enter your name");
-    else if (document.forms[0]["trivia_category"].value === "any")
-      alert("Please choose suitable category for Quiz");
-    else if (document.forms[0]["trivia_difficulty"].value === "any")
-      alert("Please choose difficulty level of Quiz");
+    if (document.forms[0]["personName"].value === "") {
+      setShowAlert(true);
+      setText("Please enter your name");
+    }
+    else if (document.forms[0]["trivia_category"].value === "any") {
+      setShowAlert(true);
+      setText("Please choose suitable category for Quiz");
+    }
+    else if (document.forms[0]["trivia_difficulty"].value === "any") {
+      setShowAlert(true);
+      setText("Please choose difficulty level of Quiz");
+    }
     else {
       navigate("/inst");
+      setShowAlert(false);
     }
     props.setName(document.forms[0]["personName"].value);
     props.setCategory(document.forms[0]["trivia_category"].value);
@@ -25,6 +35,7 @@ function PersonalInfo(props) {
   return (
     <>
       <div className="overflow-hidden h-screen">
+        {showAlert ? <AlertBox text={text} setShowAlert={setShowAlert}/> : <></>}
         <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
           <div className="App">Welcome to Quiz App</div>
         </div>

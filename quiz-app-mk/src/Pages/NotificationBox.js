@@ -26,7 +26,7 @@ function NotificationBox(props) {
               {props.header === "" ? "Are you Sure?" : props.header}
             </div>
             <div
-              className="text-xl text-blue-darker pl-4 pr-4 pb-4"
+              className="text-xl text-blue-darker pl-4 pr-4 pb-6"
               id="notificationDesc"
             >
               {props.desc === ""
@@ -35,13 +35,13 @@ function NotificationBox(props) {
             </div>
             <div className="flex justify-end p-2">
               <button
-                className="w-30 m-2 bg-white text-blue-darker p-2 rounded-md hover:bg-blue-lighter hover:text-blue-dark cursor-pointer flex justify-center items-center text-lg border-blue-darker border-2"
+                className="w-30 m-2 px-6 bg-white text-blue-darker p-2 rounded-md hover:bg-blue-lighter hover:text-blue-dark cursor-pointer flex justify-center items-center text-lg border-blue-darker border-2"
                 onClick={cancelClick}
               >
                 Cancel
               </button>
               <button
-                className="w-30 m-2 bg-blue-darker text-white p-2 rounded-md hover:bg-blue-light hover:text-blue-darker cursor-pointer flex justify-center items-center text-lg"
+                className="w-30 m-2 px-6 bg-blue-darker text-white p-2 rounded-md hover:bg-blue-light hover:text-blue-darker cursor-pointer flex justify-center items-center text-lg"
                 onClick={confirmClick}
               >
                 Confirm
