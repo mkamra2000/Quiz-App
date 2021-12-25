@@ -30,6 +30,7 @@ function Quiz(props) {
     } else {
       if (count < 9) {
         getData().then(function (response) {
+          props.setQuesFound(true);
           let myData = response.data.results;
           let ic = myData[count].incorrect_answers;
           let options = [];
@@ -46,6 +47,7 @@ function Quiz(props) {
           setQues(question);
         }).catch(
           function(error){
+            props.setQuesFound(false);
             console.error(error);
             navigate("/");
           }

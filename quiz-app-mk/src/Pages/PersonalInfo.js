@@ -5,7 +5,7 @@ import AlertBox from "./AlertBox";
 function PersonalInfo(props) {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
-  const [text, setText] = useState("initialState");
+  const [text, setText] = useState("");
   // Ex:- Form Validation Trick
   // const personName = document.forms[0]["personName"];
   function handleSubmit(e) {
@@ -35,7 +35,7 @@ function PersonalInfo(props) {
     <>
     {console.clear()}
       <div className="overflow-hidden h-screen">
-        {showAlert ? <AlertBox text={text} setShowAlert={setShowAlert}/> : <></>}
+        {showAlert || props.quesFound===false ? <AlertBox setQuesFound={props.setQuesFound} text={props.quesFound===false?"Sorry! Questions for this category is not found at this time.":text} setShowAlert={setShowAlert}/> : <></>}
         <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
           <div className="App">Welcome to Quiz App</div>
         </div>

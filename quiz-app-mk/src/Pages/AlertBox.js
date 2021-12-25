@@ -3,6 +3,7 @@ import React from "react";
 function AlertBox(props) {
     function close(){
         props.setShowAlert(false);
+        props.setQuesFound(true);
     }
   return (
     <div className="m-2">

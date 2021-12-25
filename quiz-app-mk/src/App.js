@@ -10,6 +10,7 @@ function App() {
   const [category, setCategory] = useState(0);
   const [difficulty, setDifficulty] = useState("any");
   const [data, setData] = useState([]);
+  const [quesFound, setQuesFound] = useState(true);
   return (
     <Routes>
       <Route
@@ -22,6 +23,8 @@ function App() {
             setDifficulty={setDifficulty}
             setData={setData}
             data={data}
+            quesFound={quesFound}
+            setQuesFound={setQuesFound}
           />
         }
       />
@@ -34,6 +37,7 @@ function App() {
             difficulty={difficulty}
             data={data}
             setData={setData}
+            setQuesFound={setQuesFound}
           />
         }
       />
