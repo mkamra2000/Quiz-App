@@ -66,7 +66,6 @@ function Quiz(props) {
 
   function checkForCorrect(opVal, correctId, wrongId) {
     if (opVal === correctAns) {
-      console.log("Correct Answer");
       if (attempt === 1) setScore(score + 10);
       else if (attempt === 2) setScore(score + 8);
       else if (attempt === 3) setScore(score + 5);
@@ -104,11 +103,13 @@ function Quiz(props) {
 
   return (
     <div className="overflow-hidden">
+      {console.clear()}
       {opts.length === 0 ? (
         <div className="flex justify-center items-center h-screen">
           <div className="w-16 h-16 border-4 border-blue-dark border-dotted rounded-full animate-spin"></div>
         </div>
       ) : count > 9 ? (
+        
         <NotificationBox
           name={name}
           header={"Are you Sure?"}
@@ -118,6 +119,7 @@ function Quiz(props) {
         />
       ) : (
         <>
+        {console.clear()}
           <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
             <div className="tracking-wide ">Welcome {name}</div>
           </div>

@@ -29,11 +29,11 @@ function PersonalInfo(props) {
     props.setName(document.forms[0]["personName"].value);
     props.setCategory(document.forms[0]["trivia_category"].value);
     props.setDifficulty(document.forms[0]["trivia_difficulty"].value);
-    console.log("Clicked");
   }
 
   return (
     <>
+    {console.clear()}
       <div className="overflow-hidden h-screen">
         {showAlert ? <AlertBox text={text} setShowAlert={setShowAlert}/> : <></>}
         <div className="mt-3 text-3xl text-center text-blue-darker font-bold font-serif">
