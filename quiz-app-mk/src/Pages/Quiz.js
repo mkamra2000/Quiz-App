@@ -4,7 +4,7 @@ import NotificationBox from "./NotificationBox";
 
 function Quiz(props) {
   const navigate = useNavigate();
-  let name = props.name;
+  let name = props.name.trim();
   name = name.charAt(0).toUpperCase() + name.slice(1);
   const [ques, setQues] = useState("");
   const [opts, setOpts] = useState([]);
@@ -15,6 +15,7 @@ function Quiz(props) {
   const [checkId, setCheckId] = useState("");
   const [showNext, setShowNext] = useState(false);
   const [attempt, setAttempt] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   async function getData() {
     const axios = require("axios");
@@ -28,7 +29,7 @@ function Quiz(props) {
     if (name === "" || props.category === 0 || props.difficulty === "any") {
       navigate("/");
     } else {
-      if (count < 9) {
+      if (count <= 9) {
         getData().then(function (response) {
           props.setQuesFound(true);
           let myData = response.data.results;
@@ -45,6 +46,7 @@ function Quiz(props) {
           setOpts(options);
           question = decodeURIComponent(myData[count].question);
           setQues(question);
+          setLoading(false);
         }).catch(
           function(error){
             props.setQuesFound(false);
@@ -53,11 +55,15 @@ function Quiz(props) {
           }
         );
       }
+      else{
+        setLoading(false);
+      }
     }
   }, [click, count]);
 
   function nextClick() {
     if (count <= 9) {
+      setLoading(true);
       click ? setClick(false) : setClick(true);
       setCount(count + 1);
       setCheckId("");
@@ -100,13 +106,15 @@ function Quiz(props) {
         opVal = document.getElementById("op4-text").innerText;
         checkForCorrect(opVal, "op4-correct", "op4-wrong");
         break;
+        default:
+          opVal = "";
     }
   }
 
   return (
     <div className="overflow-hidden">
       {console.clear()}
-      {opts.length === 0 ? (
+      {opts.length === 0 || loading ? (
         <div className="flex justify-center items-center h-screen">
           <div className="w-16 h-16 border-4 border-blue-dark border-dotted rounded-full animate-spin"></div>
         </div>
